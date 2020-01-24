@@ -15,10 +15,11 @@ router.get('/', (req, res) => {
     })
 })
 
+
 router.get('/:id/shoppinglist', (req, res) => {
    const {id} = req.params
 
-    db.getShoppingList(req.params.id)
+    db.getShoppingList(id)
     .then(list => {
         if (list.length) {
             res.json(list);
@@ -29,6 +30,23 @@ router.get('/:id/shoppinglist', (req, res) => {
     .catch(error => {
         console.log(error);
         res.status(500).json({message: 'Failed to get shopping list'})
+    })
+})
+
+router.get('/:id', (req, res) => {
+    const {id} = req.params
+
+    db.getInstructions(id)
+    .then(recipe => {
+        if (recipe) {
+            res.json(recipe);
+        } else {
+            res.status(404).json({message: 'could not get recipe with that id'})
+        }
+    })
+    .catch(error => {
+        console.log(error);
+        res.status(500).json({message: "Failed to get recipe instructions"})
     })
 })
 

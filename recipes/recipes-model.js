@@ -13,7 +13,7 @@ function getRecipes() {
 function getShoppingList(id) {
     return db('ingredients')
     .join('recipe_ingredients')
-    .select('recipe_ingredients.quantity', 'recipe_ingredients_id', "ingredients.id", 'ingredients.name')
+    .select('recipe_ingredients.quantity', 'recipe_ingredients.id', "ingredients.id", 'ingredients.name')
     .where({'ingredient_id': id})
     .then(ingredients => {
         if (ingredients) {
@@ -24,7 +24,9 @@ function getShoppingList(id) {
     })
 }
 
-function getInstructions() {
-    return db('recipe_ingredients').join('recipes')
-    .select('recipes.steps', 'recipes.recipes_id', 'recipe_ingredients.quantity').where('recipe_id', id)
+function getInstructions(id) {
+    return db('recipes')
+    .where('id', id)
+    .first();
+    
 }
